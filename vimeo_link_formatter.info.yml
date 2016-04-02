@@ -1,0 +1,7 @@
+name: Vimeo Link Formatter
+type: module
+description: Provides a field formatter for Link fields to format them as Vimeo video players.
+core: 8.x
+package: Fields
+dependencies:
+  - link

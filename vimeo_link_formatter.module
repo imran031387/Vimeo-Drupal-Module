@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * @file
+ * Contains vimeo_link_formatter.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function vimeo_link_formatter_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the vimeo_link_formatter module.
+    case 'help.page.vimeo_link_formatter':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Provides a field formatter for Link fields to format them as Vimeo video players.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function vimeo_link_formatter_theme($existing, $type, $theme, $path) {
+  return array(
+      'vimeo_video' => array(
+          'variables' => array(
+              'video_id' => NULL,
+              'entity_title' => NULL,
+              'settings' => array(),
+              'alternative_content' => NULL,
+          ),
+      ),
+  );
+}
+
+/**
+ * Vimeo.com's default player settings.
+ *
+ * @see vimeo_link_formatter_field_formatter_settings_form_vimeo_link_formatter_player()
+ *
+ * @return Array
+ *    Default values keyed by the setting name.
+ */
+function vimeo_link_formatter_default_settings_player() {
+    $defaults = array(
+        // Use the data types that Form API forms return them as;  Integer for
+        // Booleans, and Strings for text-input numbers.
+        'title' => 1,
+        'byline' => 1,
+        'portrait' => 1,
+        'color' => '00adef',
+        'autoplay' => 0,
+        'loop' => 0,
+        'width' => '400',
+        'height' => '225',
+        'js_api' => 0,
+        'border' => 1,
+    );
+    return $defaults;
+}
+
+/**
+ * Gets the Vimeo ID from a vimeo.com URL.
+ *
+ * @param $url String
+ *
+ * @return String
+ *   The numeric ID as a string.
+ */
+function vimeo_link_formatter_id($url) {
+    preg_match('@(http|https)://(www\.)?vimeo\.com/.*?([0-9]+)@', $url, $matches);
+    return isset($matches[3]) ? array ('protocol' => $matches[1], 'id' => $matches[3]) : NULL;
+}
+
+

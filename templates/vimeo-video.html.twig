@@ -1,0 +1,16 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display an embedded Vimeo video.
+ *
+ * Available variables:
+ * - video_id: The ID of the YouTube video. Used to construct the iframe's src.
+ * - entity_title: The title of the entity with the Vimeo video field value.
+ * - settings: An array of settings selected in the module's configuration and
+ * @ingroup themeable
+ */
+#}
+
+<figure{{ attributes }}>
+    <iframe src="https://player.vimeo.com/video/{{ video_id }}?title={{ settings['title'] }}&amp;byline={{ settings['byline'] }}&amp;portrait={{ settings['portrait'] }}&amp;color={{ settings['color'] }}&amp;autoplay={{ settings['autoplay'] }}&amp;loop={{ settings['loop'] }}" width="{{ settings['width'] }}" height="{{ settings['height'] }}" frameborder="{{ settings['border'] }}"></iframe>
+</figure>
