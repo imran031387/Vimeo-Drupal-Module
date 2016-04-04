@@ -180,14 +180,17 @@ class VimeoLinkFieldFormatter extends FormatterBase {
     $settings = $this->getSettings();
     $field_name = $items->getFieldDefinition()->getName();
     $field_data_array = $items->getEntity()->toArray();
-    $video_id = vimeo_link_formatter_id($field_data_array[$field_name][0]['uri']);
+
+    $i = 0;
     foreach ($items as $delta => $item) {
+      $video_id = vimeo_link_formatter_id($field_data_array[$field_name][$i]['uri']);
       $element[$delta] = array(
           '#theme' => 'vimeo_video',
           '#video_id' => $video_id['id'],
           '#entity_title' => $items->getEntity()->label(),
           '#settings' => $settings,
       );
+        $i ++;
     }
     return $element;
   }
